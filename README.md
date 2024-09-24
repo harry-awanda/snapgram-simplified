@@ -6,10 +6,10 @@ Snapgram Simplified adalah aplikasi berbagi foto yang memungkinkan pengguna untu
 
 Sebelum memulai, pastikan Anda telah menginstal:
 
-- [PHP](https://www.php.net/) (minimal versi 7.3)
+- [PHP](https://www.php.net/) (minimal versi 8.2)
 - [Composer](https://getcomposer.org/)
 - [MySQL](https://www.mysql.com/) atau database lainnya yang didukung
-- [Laravel](https://laravel.com/docs/8.x/installation) (minimal versi 8.x)
+- [Laravel](https://laravel.com/docs/8.x/installation) (minimal versi 11.x)
 
 ## Instalasi
 
