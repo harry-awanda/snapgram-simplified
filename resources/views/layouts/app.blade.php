@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <title>Snapgram</title>
-  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css">
   <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
 </head>
 <body>

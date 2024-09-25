@@ -110,30 +110,21 @@ class PhotoController extends Controller {
   public function like($photoID) {
     $userID = Auth::id();
     $existingLike = LikePhoto::where('fotoID', $photoID)->where('userID', $userID)->first();
-    
-    try {
-      if (!$existingLike) {
-        // Jika belum disukai, buat entri baru
-        LikePhoto::create([
-          'fotoID' => $photoID,
-          'userID' => $userID,
-          'tanggalLike' => now(),
-        ]);
-        $liked = true;
-      } else {
-        // Jika sudah disukai, hapus entri
-        $existingLike->delete();
-        $liked = false;
-      }
-      // Hitung jumlah like terbaru
-      $likeCount = LikePhoto::where('fotoID', $photoID)->count();
-      // Mengembalikan response JSON untuk AJAX
-      return response()->json(['success' => true, 'liked' => $liked, 'likeCount' => $likeCount]);
-    } catch (\Exception $e) {
-      return response()->json(['error' => $e->getMessage()], 500);
+    if (!$existingLike) {
+      // Jika belum disukai, buat entri baru
+      LikePhoto::create([
+        'fotoID' => $photoID,
+        'userID' => $userID,
+        'tanggalLike' => now(),
+      ]);
+      $liked = true;
+    } else {
+      // Jika sudah disukai, hapus entri
+      $existingLike->delete();
+      $liked = false;
     }
   }
-  
+
   public function showComments($photoID) {
     $photo = Photo::with(['comments.user'])->findOrFail($photoID);
     return view('photos.comment', compact('photo'));

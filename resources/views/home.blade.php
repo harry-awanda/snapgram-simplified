@@ -4,15 +4,15 @@
 <h2 style="text-align: center;">Snapgram</h2>
 <table>
   <tr>
+    <th>Pengguna</th>
     <th>Judul</th>
-    <th>Deskripsi</th>
     <th>Foto</th>
     <th>Aksi</th>
   </tr>
   @foreach($photos as $photo)
   <tr>
+    <td>{{ $photo->user->username }}</td>
     <td>{{ $photo->judulFoto }}</td>
-    <td>{{ $photo->deskripsiFoto }}</td>
     <td>
       <img loading="lazy" src="{{ asset('storage/' . $photo->lokasiFile) }}"
       alt="{{ $photo->judulFoto }}" style="width: 200px; height: auto; aspect-ratio: 1/1; object-fit: cover;">
