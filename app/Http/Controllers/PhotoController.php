@@ -41,7 +41,7 @@ class PhotoController extends Controller {
       'albumID' => $request->albumID,
     ]);
 
-    return redirect()->route('home')->with('success', 'Foto berhasil diunggah!');
+    return redirect()->route('home');
   }
 
   // Menampilkan detail foto
@@ -90,7 +90,7 @@ class PhotoController extends Controller {
     $photo->deskripsiFoto = $request->description;
     $photo->save();
     
-    return redirect()->route('albums.photos', $photo->albumID)->with('success', 'Foto berhasil diperbarui!');
+    return redirect()->route('albums.photos', $photo->albumID);
   }
   public function destroy($photoID) {
     $photo = Photo::findOrFail($photoID);
@@ -103,7 +103,7 @@ class PhotoController extends Controller {
     // Hapus entri di database
     $photo->delete();
     
-    return redirect()->route('albums.photos', $photo->albumID)->with('success', 'Foto berhasil dihapus!');
+    return redirect()->route('albums.photos', $photo->albumID);
   }
 
   // Menghandle like pada foto
@@ -149,6 +149,6 @@ class PhotoController extends Controller {
       'fotoID' => $photoID,
       'userID' => Auth::id(),
     ]);
-    return redirect()->route('photos.comments', $photoID)->with('success', 'Komentar berhasil ditambahkan!');
+    return redirect()->route('photos.comments', $photoID);
   }
 }

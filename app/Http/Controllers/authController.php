@@ -21,7 +21,7 @@ class authController extends Controller {
     $credentials = $request->only('username', 'password');
     if (Auth::attempt($credentials)) {
       // Login berhasil
-      return redirect()->intended('/home')->with('success', 'Anda berhasil login.');
+      return redirect()->route('home');
     }
     // Login gagal
     return back()->withErrors([
@@ -44,11 +44,11 @@ class authController extends Controller {
       'password' => Hash::make($request->password), // Hash password
     ]);
    // Mengalihkan ke halaman login setelah registrasi berhasil
-    return redirect()->route('login')->with('success', 'Anda berhasil mendaftar, silakan login.');
+    return redirect()->route('login');
   }
   // Menghandle logout
   public function logout(Request $request) {
     Auth::logout();
-    return redirect()->route('login')->with('success', 'Anda berhasil logout.');
+    return redirect()->route('login');
   }
 }

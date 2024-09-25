@@ -29,7 +29,7 @@ class AlbumController extends Controller {
       'userID' => Auth::id(),
       'tanggalDibuat' => now(),
     ]);
-    return redirect()->route('albums.index')->with('success', 'Album berhasil dibuat.');
+    return redirect()->route('albums.index');
   }
 
   public function edit(Album $album) {
@@ -54,7 +54,7 @@ class AlbumController extends Controller {
       'deskripsi' => $request->deskripsi,
     ]);
 
-    return redirect()->route('albums.index')->with('success', 'Album berhasil diperbarui!');
+    return redirect()->route('albums.index');
   }
 
   public function destroy(Album $album) {
@@ -69,6 +69,6 @@ class AlbumController extends Controller {
     }
 
     $album->delete();
-    return redirect()->route('albums.index')->with('success', 'Album berhasil dihapus!');
+    return redirect()->route('albums.index');
   }
 }

@@ -32,6 +32,6 @@ class HomeController extends Controller {
       ]);
     }
     // Kembali ke halaman home setelah melakukan aksi like
-    return redirect()->route('home')->with('success', 'Aksi berhasil!');
+    return redirect()->route('home');
   }
 }

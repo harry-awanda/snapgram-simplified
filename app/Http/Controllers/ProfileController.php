@@ -28,6 +28,6 @@ class ProfileController extends Controller {
       $user->password = Hash::make($request->password);
     }
     $user->save();
-    return redirect()->route('profile.index')->with('success', 'Profil berhasil diperbarui.');
+    return redirect()->route('profile.index');
   }
 }
