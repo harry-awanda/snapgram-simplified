@@ -41,7 +41,7 @@ class PhotoController extends Controller {
       'albumID' => $request->albumID,
     ]);
 
-    return redirect()->route('albums.index')->with('success', 'Foto berhasil diunggah!');
+    return redirect()->route('home')->with('success', 'Foto berhasil diunggah!');
   }
 
   // Menampilkan detail foto

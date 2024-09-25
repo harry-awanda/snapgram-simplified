@@ -6,7 +6,7 @@
   <tr>
     <th>Judul</th>
     <th>Deskripsi</th>
-    <th>Gambar</th>
+    <th>Foto</th>
     <th>Aksi</th>
   </tr>
   @foreach($photos as $photo)
