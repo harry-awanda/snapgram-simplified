@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class AlbumController extends Controller {
   public function index() {
-    $albums = Album::where('userID', Auth::id())->with(['photos' => function($query) {
-      $query->orderBy('created_at', 'desc');
-    }])->get();
+    $albums = Album::where('userID', Auth::id())->get();
     return view('albums.index', compact('albums'));
   }
 
