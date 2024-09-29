@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Add this meta tag to make CSS works with nrog -->
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <head>
   <title>Snapgram</title>
   <link rel="stylesheet" href="{{ asset('assets/css/styles.css') }}">
