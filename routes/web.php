@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
   // Photo routes
   Route::resource('photos', PhotoController::class);
   Route::post('photos/{photo}/like/', [PhotoController::class, 'like'])->name('photos.like');
-  Route::get('/albums/{albumID}/photos', [PhotoController::class, 'index'])->name('albums.photos');
+  Route::get('/albums/{album}/photos', [PhotoController::class, 'index'])->name('albums.photos');
   Route::get('/photos/{photo}/comments', [PhotoController::class, 'showComments'])->name('photos.comments');
   Route::post('/photos/{photo}/comments', [PhotoController::class, 'storeComment'])->name('photos.comment.store');
 

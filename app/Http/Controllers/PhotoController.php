@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller {
-
-  public function index($albumID) {
-    $album = Album::with('photos')->findOrFail($albumID);
+  
+  public function index(Album $album) {
+    $album->load('photos'); // Eager load photos relation
     return view('photos.index', compact('album'));
   }
   // Menampilkan form untuk mengunggah foto
