@@ -11,16 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller {
+
   public function index($albumID) {
     $album = Album::with('photos')->findOrFail($albumID);
     return view('photos.index', compact('album'));
-}
+  }
   // Menampilkan form untuk mengunggah foto
   public function create() {
     $albums = Album::where('userID', auth()->id())->get();
     return view('photos.create', compact('albums'));
   }
-
   // Menyimpan foto ke database
   public function store(Request $request) {
     $request->validate([
@@ -40,10 +40,8 @@ class PhotoController extends Controller {
       'tanggalUnggah' => now(),
       'albumID' => $request->albumID,
     ]);
-
     return redirect()->route('home');
   }
-
   // Menampilkan detail foto
   public function show($photoID) {
     $photo = Photo::with(['user', 'comments.user', 'likes'])->findOrFail($photoID);
@@ -52,7 +50,6 @@ class PhotoController extends Controller {
   
   public function edit($photoID) {
     $photo = Photo::findOrFail($photoID);
-    
     // Pastikan hanya user yang membuat foto bisa mengedit
     if ($photo->userID !== Auth::id()) {
       abort(403, 'Unauthorized action.');
@@ -62,9 +59,7 @@ class PhotoController extends Controller {
     
     return view('photos.edit', compact('photo', 'albums'));
   }
-    
-
-
+  
   public function update(Request $request, $photoID) {
     $photo = Photo::findOrFail($photoID);
     // Pastikan hanya user yang membuat foto dapat mengeditnya
@@ -92,6 +87,7 @@ class PhotoController extends Controller {
     
     return redirect()->route('albums.photos', $photo->albumID);
   }
+
   public function destroy($photoID) {
     $photo = Photo::findOrFail($photoID);
     // Pastikan hanya user yang membuat foto dapat menghapusnya
@@ -105,41 +101,40 @@ class PhotoController extends Controller {
     
     return redirect()->route('albums.photos', $photo->albumID);
   }
-
-  // Menghandle like pada foto
-  public function like($photoID) {
-    $userID = Auth::id();
-    $existingLike = LikePhoto::where('fotoID', $photoID)->where('userID', $userID)->first();
-    if (!$existingLike) {
-      // Jika belum disukai, buat entri baru
-      LikePhoto::create([
-        'fotoID' => $photoID,
-        'userID' => $userID,
-        'tanggalLike' => now(),
-      ]);
-      $liked = true;
+  // Fungsi like
+  public function like($photo) {
+    // Cari foto berdasarkan primary key fotoID
+    $photos = Photo::findOrFail($photo);
+    // Cek apakah foto sudah di-like oleh pengguna
+    if ($photos->isLikedByAuthUser()) {
+      // Hapus like
+      $photos->likes()->where('userID', Auth::user()->userID)->delete();
     } else {
-      // Jika sudah disukai, hapus entri
-      $existingLike->delete();
-      $liked = false;
+      // Tambahkan like dengan 'tanggalLike'
+      $photos->likes()->create([
+        'userID' => Auth::user()->userID,
+        'fotoID' => $photo,
+        'tanggalLike' => now(), // Menambahkan tanggalLike secara manual
+      ]);
     }
+    // Kembali ke halaman home setelah melakukan aksi like
+    return redirect()->route('home');
   }
-
-  public function showComments($photoID) {
-    $photo = Photo::with(['comments.user'])->findOrFail($photoID);
+  
+  public function showComments($photo) {
+    $photo = Photo::with(['comments.user'])->findOrFail($photo);
     return view('photos.comment', compact('photo'));
   }
   
-  public function storeComment(Request $request, $photoID) {
+  public function storeComment(Request $request, $photo) {
     $request->validate([
       'isiKomentar' => 'required|string|max:200',
     ]);
-
     Comment::create([
       'isiKomentar' => $request->isiKomentar,
-      'fotoID' => $photoID,
+      'fotoID' => $photo,
       'userID' => Auth::id(),
     ]);
-    return redirect()->route('photos.comments', $photoID);
+    return redirect()->route('photos.comments', $photo);
   }
 }

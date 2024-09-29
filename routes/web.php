@@ -25,16 +25,13 @@ Route::controller(AuthController::class)->group(function () {
 Route::middleware('auth')->group(function () {
   // Home route
   Route::get('/home', [HomeController::class, 'index'])->name('home');
-  // Route untuk like/unlike foto
-  Route::post('photos/{fotoID}/like', [HomeController::class, 'like'])->name('photos.like');
-  
   // Album resource routes
   Route::resource('albums', AlbumController::class);
   
   // Photo routes
   Route::resource('photos', PhotoController::class);
+  Route::post('photos/{photo}/like/', [PhotoController::class, 'like'])->name('photos.like');
   Route::get('/albums/{albumID}/photos', [PhotoController::class, 'index'])->name('albums.photos');
-  Route::post('photos/{photoID}/like/', [PhotoController::class, 'like'])->name('photos.like');
   Route::get('/photos/{photo}/comments', [PhotoController::class, 'showComments'])->name('photos.comments');
   Route::post('/photos/{photo}/comments', [PhotoController::class, 'storeComment'])->name('photos.comment.store');
 
