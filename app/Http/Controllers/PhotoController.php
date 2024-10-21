@@ -53,14 +53,6 @@ class PhotoController extends Controller {
     return redirect()->route('home');
   }
   
-  // Menampilkan detail foto berdasarkan model yang dipassing
-  public function show(Photo $photo) {
-    // Memuat foto beserta relasi user, komentar, dan like
-    $photo->load(['user', 'comments.user', 'likes']);
-    // Mengembalikan tampilan detail foto
-    return view('photo', compact('photo'));
-  }
-  
   // Menampilkan form untuk mengedit foto
   public function edit(Photo $photo) {
     // Memastikan hanya pemilik foto yang dapat mengedit
